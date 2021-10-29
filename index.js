@@ -24,11 +24,11 @@ async function run(){
     try{
         await client.connect();
         console.log('Conected to database');
-        const database = client.db("tourism");
+        const database = client.db("carMechanic");
         const servicesCollection = database.collection("services");
 
         // POST API 
-        app.get('/addServices', async(req, res) => {
+        app.post('/addServices', async(req, res) => {
 
             console.log('Hitting the post api');
             res.send('Post Hitting succesfully');
@@ -43,6 +43,20 @@ async function run(){
             const result = await servicesCollection.insertOne(service);
             console.log(result);
             */
+            
+        }); // POST API end
+
+
+        // GET API 
+        app.get('/services', async(req, res) => {
+
+            console.log('Hitting the get post api');
+            //res.send('Post Hitting succesfully');
+            
+            const cursor = servicesCollection.find({});
+            const services = await cursor.toArray();
+            res.send(services);
+            
             
         }); // POST API end
 
