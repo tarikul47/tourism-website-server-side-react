@@ -18,7 +18,7 @@ app.use(express.json());
 
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.dyvua.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
-// console.log(uri);
+console.log(uri);
 
 async function run(){
     try{
@@ -27,12 +27,32 @@ async function run(){
         const database = client.db("tourism");
         const servicesCollection = database.collection("services");
 
+        // POST API 
+        app.get('/addServices', async(req, res) => {
+
+            console.log('Hitting the post api');
+            res.send('Post Hitting succesfully');
+            
+            /*
+            const service = {
+                "name": "ENGINE DIAGNOSTIC",
+                "price": "300",
+                "description": "Lorem ipsum dolor sit amet, consectetu radipisi cing elitBeatae autem aperiam nequ quaera molestias voluptatibus harum ametipsa.",
+                "img": "https://i.ibb.co/dGDkr4v/1.jpg"
+            };
+            const result = await servicesCollection.insertOne(service);
+            console.log(result);
+            */
+            
+        }); // POST API end
+
+
         // GET API
         app.get('/', (req, res)=> {
             res.send('database connected by api');
         });
 
-    }
+    } //  try end here 
     finally{
        // await client.close();
     }
