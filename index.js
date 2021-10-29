@@ -39,8 +39,14 @@ async function run(){
 }
 run().catch(console.dir);
 
+// ROOT API 
 app.get('/', (req, res)=> {
     res.send('Yes, Tourism Server is running.');
+});
+
+// TEST API 
+app.get('/test', (req, res)=> {
+    res.send('Yes, Testing successfully.');
 });
 
 app.listen(port, () => {
