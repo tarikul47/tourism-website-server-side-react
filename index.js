@@ -27,8 +27,8 @@ async function run(){
     try{
         await client.connect();
         console.log('Conected to database');
-        //const database = client.db("carMechanic");
-        //const servicesCollection = database.collection("services");
+        const database = client.db("tourism");
+        const servicesCollection = database.collection("services");
 
         // POST API 
         app.post('/services', async(req, res) => {
@@ -43,7 +43,7 @@ async function run(){
 
     }
     finally{
-       // await client.close();
+        await client.close();
     }
 }
 run().catch(console.dir);
@@ -58,4 +58,3 @@ app.listen(port, () => {
     console.log('Yes, Server is Running', port);
 });
 
-// test file 
