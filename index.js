@@ -34,21 +34,27 @@ async function run(){
             const result = await servicesCollection.insertOne(service);
             console.log(service);
             res.json(result);
-        }); // POST API end
+        }); 
 
 
-        // GET API 
+        // SINGLE SERVICE POST API
+        app.get("/services/:id", async(req, res) => {
+            const id = req.params.id;
+           // console.log('getting sinlge id', id);
+            const query = {_id: ObjectId(id)};
+            const service = await servicesCollection.findOne(query);
+            res.json(service);
+
+        })
+
+
+        // SERVICE GET API 
         app.get('/services', async(req, res) => {
-
-            console.log('Hitting the get post api');
-            //res.send('Post Hitting succesfully');
-            
+            console.log('Hitting the get post api');    
             const cursor = servicesCollection.find({});
             const services = await cursor.toArray();
-            res.send(services);
-            
-            
-        }); // GET API end
+            res.send(services);           
+        });
 
 
         // GET API
