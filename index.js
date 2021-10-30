@@ -32,7 +32,7 @@ async function run() {
 
     // SERVICE POST API
     app.post("/services", async (req, res) => {
-      console.log("Post Hitting succesfully");
+      //console.log("Post Hitting succesfully");
       const service = req.body;
       const result = await servicesCollection.insertOne(service);
       console.log(service);
@@ -50,7 +50,7 @@ async function run() {
 
     // SERVICE GET API
     app.get("/services", async (req, res) => {
-      console.log("Hitting the get post api");
+      //console.log("Hitting the get post api");
       const cursor = servicesCollection.find({});
       const services = await cursor.toArray();
       res.send(services);
@@ -58,7 +58,7 @@ async function run() {
 
     // ORDER POST API
     app.post("/orders", async (req, res) => {
-      console.log("Orders Post Hitting succesfully");
+      //console.log("Orders Post Hitting succesfully");
       const order = req.body;
       const result = await ordersCollection.insertOne(order);
       //console.log(order);
@@ -74,16 +74,16 @@ async function run() {
     });
 
 
-    // ORDERS GET API
+    // ORDERS GET API BY EMAIL
     app.get("/orders/:email", async (req, res) => {
       const email = req.params.email;
-      console.log('Hitting the get post api', email);
+      //console.log('Hitting the get post api', email);
       const cursor = ordersCollection.find({email:email});
       const orders = await cursor.toArray();
       res.send(orders);
     });
 
-    
+
     // ORDER DELETE API
     app.delete("/orders/:id", async (req, res) => {
       const id = req.params.id;
