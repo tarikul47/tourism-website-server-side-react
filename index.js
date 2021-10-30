@@ -26,6 +26,7 @@ async function run(){
         console.log('Conected to database');
         const database = client.db("tourism");
         const servicesCollection = database.collection("services");
+        const ordersCollection = database.collection("orders");
 
         // SERVICE POST API 
         app.post('/services', async(req, res) => {
@@ -35,7 +36,6 @@ async function run(){
             console.log(service);
             res.json(result);
         }); 
-
 
         // SINGLE SERVICE POST API
         app.get("/services/:id", async(req, res) => {
@@ -47,7 +47,6 @@ async function run(){
 
         })
 
-
         // SERVICE GET API 
         app.get('/services', async(req, res) => {
             console.log('Hitting the get post api');    
@@ -56,14 +55,28 @@ async function run(){
             res.send(services);           
         });
 
+         // ORDER POST API 
+         app.post('/orders', async(req, res) => {
+            console.log('Post Hitting succesfully');    
+            const order = req.body;
+            const result = await ordersCollection.insertOne(order);
+            //console.log(order);
+            res.json(result);
+        }); 
 
-        // GET API
-        app.get('/', (req, res)=> {
-            res.send('database connected by api');
+        // ORDERS GET API 
+        app.get('/orders', async(req, res) => {
+            //console.log('Hitting the get post api');    
+            const cursor = ordersCollection.find({});
+            const orders = await cursor.toArray();
+            res.send(orders);           
         });
 
+
     } //  try end here 
+
     finally{
+
        // await client.close();
     }
 }
