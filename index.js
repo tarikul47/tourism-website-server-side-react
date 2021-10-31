@@ -73,16 +73,28 @@ async function run() {
       res.send(orders);
     });
 
-
     // ORDERS GET API BY EMAIL
     app.get("/orders/:email", async (req, res) => {
       const email = req.params.email;
       //console.log('Hitting the get post api', email);
-      const cursor = ordersCollection.find({email:email});
+      const cursor = ordersCollection.find({ email: email });
       const orders = await cursor.toArray();
       res.send(orders);
     });
 
+    // ORDER STATUS UPDATE PUT API
+    app.put("/orders/:id", async (req, res) => {
+      const id = req.params.id;
+      const data = req.body.status;
+      //const query = ;
+      const order = await ordersCollection.updateOne(
+        { _id: ObjectId(id) },
+        { $set: { status: data }},
+        { upsert: true }
+      );
+      res.json(order);
+      //console.log("Order put api hit", order, data);
+    });
 
     // ORDER DELETE API
     app.delete("/orders/:id", async (req, res) => {
@@ -92,7 +104,6 @@ async function run() {
       const order = await ordersCollection.deleteOne(query);
       res.json(order);
     });
-
   } finally {
     //  try end here
     // await client.close();
